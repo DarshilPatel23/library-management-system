@@ -1,0 +1,45 @@
+﻿@model List<LMS.Models.IssuedBook>
+
+@{
+    ViewData["Title"] = "Issued Books";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<a onclick="history.back()" class="btn btn-outline-secondary mb-3">
+    <i class="bi bi-arrow-left"></i> Back
+</a>
+
+<h2 class="text-center mb-4">All Issued Books</h2>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Issued To</th>
+                <th>Issued Dat & Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!Model.Any())
+            {
+                <tr>
+                    <td colspan="4" class="text-center text-muted">No books have been issued yet.</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var i in Model)
+                {
+                    <tr>
+                        <td>@i.Book?.Title</td>
+                        <td>@i.Book?.Author</td>
+                        <td>@i.MemberName</td>
+                        <td>@i.IssuedDate.ToString("dd MMM yyyy | hh:mm tt")</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

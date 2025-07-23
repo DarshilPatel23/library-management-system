@@ -1,0 +1,118 @@
+﻿@model IEnumerable<LMS.Models.Book>
+
+@{
+    ViewData["Title"] = "Books";
+}
+
+<style>
+    /* Align dropdown and search box in same row */
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter {
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+
+    .dataTables_wrapper .dataTables_filter {
+        float: right;
+    }
+
+    /* Clean up pagination buttons */
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        /* padding: 4px 10px; */
+        margin: 0 2px;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        background-color: #f8f9fa;
+        color: #212529;
+        transition: background-color 0.2s;
+    }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background-color: #e2e6ea;
+            color: #212529;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background-color: #0d6efd;
+            color: white !important;
+            border: none;
+        }
+
+            .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+                background-color: #0b5ed7;
+            }
+</style>
+
+<a onclick="history.back()" class="btn btn-outline-secondary mb-3">
+    <i class="bi bi-arrow-left"></i> Back
+</a>
+
+<h2>Books List</h2>
+<a asp-action="Create" class="btn btn-secondary mb-3">Add New Book</a>
+@* <a class="btn btn-primary mb-3" asp-page="/Books/Create">Add New Book</a> *@
+@* <a href="@url.action("create", "books")" class="btn btn-primary mb-3">add new book</a> *@
+
+
+@if (!Model.Any())
+{
+    <p>No books available.</p>
+}
+else
+{
+    <table id="booksTable" class="table table-bordered">
+        
+        <thead class="table-dark">
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Genre</th>
+                <th>Year</th>
+                <th>Location</th>
+               @*  <th>Quantity</th> *@
+                <th>Status</th>      
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model)
+            {
+                <tr>
+                    <td>@book.Title</td>
+                    <td>@book.Author</td>
+                    <td>@book.Genre</td>
+                    <td>@book.Year</td>
+                    <td>@book.Location</td>
+                    @* <td>@book.Quantity</td> *@
+                    <td>
+                        @if (book.Status == "Issued")
+                        {
+                            <span class="badge bg-secondary">Issued</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-success">Available</span>
+                        }
+                    </td>
+                    <td>
+                        <a asp-controller="Books" asp-action="Edit" asp-route-id="@book.Id" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="/Books/Delete/@book.Id" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#booksTable').DataTable({
+                responsive: true,
+                lengthChange: true,
+                autoWidth: false
+            });
+        });
+    </script>
+}
+
+    

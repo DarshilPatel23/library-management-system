@@ -1,0 +1,116 @@
+﻿@model LMS.Models.LoginModel
+@{
+    ViewData["Title"] = "Admin Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        body {
+            background-color: #e7efff;
+        }
+
+        .login-box {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        img {
+            width: 300px;
+        }
+
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #007bff;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="login-box mx-auto" style="max-width: 850px;">
+            <div class="me-4">
+                <img src="~/images/login.png" alt="login" />
+            </div>
+            <div class="w-100">
+
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger auto-hide-alert">@ViewBag.Error</div>
+                }
+
+
+
+                <h3 class="mb-2">Sign In</h3>
+                <p class="text-muted mb-4">Unlock your world.</p>
+
+                
+                @* <form asp-action="Login" method="post" novalidate>
+                    <div class="mb-3">
+                        <label>Email</label>
+                        <input asp-for="Email" class="form-control" placeholder="Enter your email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Password</label>
+                        <input asp-for="Password" class="form-control" type="password" placeholder="Enter your password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <button class="btn btn-primary w-100">Sign In</button>
+
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-outline-secondary w-100 mt-2">Back to Member Login Page</a> *@
+
+                    @* @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger">@ViewBag.Error</div>
+                    } *@
+
+
+                    <form asp-action="AdminLogin" method="post">
+                        <div class="mb-3">
+                            <label>Email</label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Password</label>
+                            <input asp-for="Password" type="password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-outline-secondary w-100 mt-2">Back to Member Login Page</a>
+
+
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            setTimeout(function () {
+                $('.auto-hide-alert').fadeOut('slow');
+            }, 3000); // Hide after 3 seconds
+        });
+    </script>
+
+
+
+</body>
+</html>

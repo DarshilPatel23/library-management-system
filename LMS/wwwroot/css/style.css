@@ -1,0 +1,11 @@
+﻿.dataTables_paginate ul.pagination {
+    justify-content: end;
+}
+
+.dataTables_filter input {
+    width: auto;
+}
+
+.form-select-sm, .paginate_button .page-link {
+    font-size: 1.5rem;
+}

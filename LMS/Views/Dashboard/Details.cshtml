@@ -1,0 +1,46 @@
+﻿@model dynamic
+@{
+    ViewData["Title"] = "Issued & Returned Books";
+}
+
+<a onclick="history.back()" class="btn btn-outline-secondary mb-3">
+    <i class="bi bi-arrow-left"></i> Back
+</a>
+
+<h2 class="text-center mb-4">Issued & Returned Books</h2>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Book ID</th>
+            <th>Book Title</th>
+            <th>Issued To</th>
+            <th>Issued Date & Time</th>
+            <th>Return Date & Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            bool isReturned = item.ReturnDate != null;
+            string rowClass = isReturned ? "table-success" : "table-warning";
+
+            <tr class="@rowClass">
+                <td>@item.BookId</td>
+                <td>@item.Title</td>
+                <td>@item.MemberName</td>
+                <td>@item.IssuedDate.ToString("dd-MM-yyyy hh:mm tt")</td>
+                <td>
+                    @if (isReturned)
+                    {
+                        @item.ReturnDate?.ToString("dd-MM-yyyy hh:mm tt")
+                    }
+                    else
+                    {
+                        <span class="text-danger fw-bold">Not Returned</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

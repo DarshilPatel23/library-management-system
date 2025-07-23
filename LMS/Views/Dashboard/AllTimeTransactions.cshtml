@@ -1,0 +1,125 @@
+﻿@* @model List<LMS.Models.AllTimeTransaction> *@
+@model LMS.Models.TransactionFilterViewModel
+
+
+@{
+    ViewData["Title"] = "All-Time Transactions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+@* <style>
+    /* Align dropdown and search box in same row */
+    .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter {
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+
+    .dataTables_wrapper .dataTables_filter {
+        float: right;
+    }
+
+    /* Clean up pagination buttons */
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        /* padding: 4px 10px; */
+        margin: 0 2px;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        background-color: #f8f9fa;
+        color: #212529;
+        transition: background-color 0.2s;
+    }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background-color: #e2e6ea;
+            color: #212529;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background-color: #0d6efd;
+            color: white !important;
+            border: none;
+        }
+
+            .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+                background-color: #0b5ed7;
+            }
+</style> *@
+<style>
+    table.dataTable thead th, table.dataTable thead td {
+        padding: 10px;
+        /* border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+        border-top: 1px solid rgba(0, 0, 0, 0.3); */
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        background-color: #222;
+        color: white;
+    }
+</style>
+
+
+<a onclick="history.back()" class="btn btn-outline-secondary mb-3">
+    <i class="bi bi-arrow-left"></i> Back
+</a>
+
+<h2>All-Time Transactions</h2>
+
+<form method="get" asp-action="AllTimeTransactions" class="mb-3">
+    <label for="filter">Filter:</label>
+    <select name="filter" id="filter" onchange="this.form.submit()" class="form-select" style="width: 200px;">
+        <option value="All" selected="@(Model.Filter == "All")">All</option>
+        <option value="Returned" selected="@(Model.Filter == "Returned")">Returned</option>
+        <option value="Not Returned" selected="@(Model.Filter == "Not Returned")">Not Returned</option>
+
+    </select>
+</form>
+
+
+<table id="allTimeTable" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Book Title</th>
+            <th>Member Name</th>
+            <th>Issued Date & Time</th>
+            <th>Returned Date & Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var t in Model.Transactions)
+        {
+            <tr>
+                <td>@t.BookTitle</td>
+                <td>@t.MemberName</td>
+                <td>@t.IssuedDate.ToString("dd/MM/yyyy | hh:mm tt")</td>
+                <td>
+                    @if (t.ReturnedDate == null)
+                    {
+                        <span style="color: red; font-weight: bold;">Not Returned</span> 
+                        
+                    }
+                    else
+                    {
+                        @t.ReturnedDate?.ToString("dd/MM/yyyy | hh:mm tt")
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#allTimeTable').DataTable({
+                responsive: true,
+                order: [], // disables default sorting
+                language: {
+                    search: "Search records:",
+                    lengthMenu: "Show _MENU_ entries per page",
+                    info: "Showing _START_ to _END_ of _TOTAL_ entries"
+                }
+            });
+        });
+    </script>
+}

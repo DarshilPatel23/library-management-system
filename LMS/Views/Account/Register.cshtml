@@ -1,0 +1,81 @@
+﻿@model LMS.Models.Member
+@{
+    ViewData["Title"] = "Sign Up";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #e7efff;
+        }
+
+        .register-box {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #007bff;
+        }
+
+        img {
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="register-box mx-auto" style="max-width: 850px;">
+            <div class="me-4">
+                <img src="~/images/register.png" alt="Register Image" />
+            </div>
+            <div class="w-100">
+                <h3 class="mb-2">Create an Account</h3>
+                <p class="text-muted mb-4">Start your library journey.</p>
+
+                <form asp-action="Register" method="post">
+                    <div class="mb-3">
+                        <label>Name</label>
+                        <input asp-for="Name" class="form-control" placeholder="Enter your name" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Email</label>
+                        <input asp-for="Email" class="form-control" placeholder="Enter your email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Password</label>
+                        <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <button class="btn btn-primary w-100">Register</button>
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-outline-secondary w-100 mt-2">Back to Login</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        @* <partial name="_ValidationScriptsPartial" /> *@
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    
+}
+    }
+</body>
+</html>

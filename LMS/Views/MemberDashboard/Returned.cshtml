@@ -1,0 +1,99 @@
+﻿@model List<LMS.Models.ReturnedBook>
+
+@{
+    ViewData["Title"] = "Returned Books";
+    Layout = "~/Views/Shared/_MemberLayout.cshtml";
+}
+
+@* <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" /> *@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+
+@* <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script> *@
+
+<style>
+    .dataTables_paginate ul.pagination {
+        justify-content: end;
+    }
+
+   /*  .dataTables_filter input {
+        width: auto;
+    }
+    .form-select-sm, .paginate_button .page-link {
+        font-size:1.5rem;
+    } */
+</style>
+
+<style>
+    /* Align dropdown and search box in same row */
+    .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter {
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+
+    .dataTables_wrapper .dataTables_filter {
+        float: right;
+    }
+
+    /* Clean up pagination buttons */
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        /* padding: 4px 10px; */
+        margin: 0 2px;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        background-color: #f8f9fa;
+        color: #212529;
+        transition: background-color 0.2s;
+    }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background-color: #e2e6ea;
+            color: #212529;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background-color: #0d6efd;
+            color: white !important;
+            border: none;
+        }
+
+            .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+                background-color: #0b5ed7;
+            }
+</style>
+
+<a onclick="history.back()" class="btn btn-outline-secondary mb-3">
+    <i class="bi bi-arrow-left"></i> Back
+</a>
+
+<h2 class="text-center mb-4">Returned Books</h2>
+
+
+<table class="table table-bordered table-striped" id="returnedBooksTable">
+    <thead class="table-dark">
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Returned Date & Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Book.Title</td>
+                <td>@item.Book.Author</td>
+                <td>@item.ReturnedDate?.ToString("dd/MM/yyyy hh:mm tt")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+    $(document).ready(function () {
+        $('#returnedBooksTable').DataTable();
+    });
+</script>

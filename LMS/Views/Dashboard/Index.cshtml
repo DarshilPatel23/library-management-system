@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<style>
+    .btn:hover{
+        color: #212529;
+    }
+</style>
+
+<h2 class="text-center mb-4">Admin Dashboard</h2>
+
+<div class="row g-4">
+    <!-- Book Management -->
+    <div class="col-md-4">
+        <div class="card text-white bg-primary shadow">
+            <div class="card-body text-center">
+                <i class="bi bi-book" style="font-size: 2rem;"></i>
+                <h5 class="card-title mt-2">Book Management</h5>
+                <p class="card-text display-6">@ViewBag.TotalBooks</p>
+                <a asp-controller="Books" asp-action="Index" class="btn btn-light mt-2">Manage Books</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Member Management -->
+    <div class="col-md-4">
+        <div class="card text-white bg-success shadow">
+            <div class="card-body text-center">
+                <i class="bi bi-people" style="font-size: 2rem;"></i>
+                <h5 class="card-title mt-2">Member Management</h5>
+                <p class="card-text display-6">@ViewBag.TotalMembers</p>
+                <a asp-controller="Dashboard" asp-action="Members" class="btn btn-light mt-2">Members Details</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Issued & Returned Books -->
+    <div class="col-md-4">
+        <div class="card text-white bg-warning shadow">
+            <div class="card-body text-center">
+                <i class="bi bi-arrow-left-right" style="font-size: 2rem;"></i>
+                <h5 class="card-title mt-2">Issued & Returned</h5>
+                <p class="card-text">
+                    <span class="d-block">Current Issued: <strong>@ViewBag.TotalIssued</strong></span>
+                    <span class="d-block">Total Returned: <strong>@ViewBag.TotalReturned</strong></span>
+                </p>
+                <a asp-controller="Dashboard" asp-action="AllTimeTransactions" class="btn btn-light mt-2">View Details</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+            if (window.history.replaceState) {
+                window.history.replaceState(null, null, window.location.href);
+            }
+        });
+    </script>
+}

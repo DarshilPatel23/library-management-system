@@ -1,0 +1,57 @@
+﻿@model List<LMS.ViewModels.TransactionViewModel>
+
+@{
+    ViewData["Title"] = "Issued & Returned Books";
+}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<h2 class="text-center mb-4">Issued & Returned Books</h2>
+
+<div class="table-responsive">
+    <table id="booksTable" class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Book Title</th>
+                <th>Issued To</th>
+                <th>Issued Date & Time</th>
+                <th>Returned Date & Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var isReturned = item.ReturnedDate.HasValue;
+                var rowClass = isReturned ? "table-success" : "table-warning";
+
+                <tr class="@rowClass">
+                    <td>@item.BookTitle</td>
+                    <td>@item.MemberName</td>
+                    <td>@item.IssuedDate.ToString("dd-MM-yyyy hh:mm tt")</td>
+                    <td>
+                        @if (isReturned)
+                        {
+                            @item.ReturnedDate?.ToString("dd-MM-yyyy hh:mm tt")
+                        }
+                        else
+                        {
+                            <span class="text-danger fw-bold">Not Returned</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#booksTable').DataTable({
+            "paging": true,
+            "ordering": true,
+            "searching": true
+        });
+    });
+</script>
